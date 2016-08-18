@@ -29,7 +29,7 @@ public class EnterEmployeeDetails_Screen {
 	private JLabel fNameLbl, lNameLbl, oNameLbl, addressLbl, cityLbl, countryLbl, postcodeLbl, NINumberLbl, bankNameLbl,
 			accountNumLbl, sortCodeLbl, cardNameLbl, IBANLbl, BICLbl, salaryLbl;
 
-	private JTextField fNameTxt, lNameTxt, oNameTxt, addressTxt, cityTxt, countyTxt, postcodeTxt, NINumberTxt,
+	private JTextField fNameTxt, lNameTxt, oNameTxt, addressTxt, cityTxt, countryTxt, postcodeTxt, NINumberTxt,
 			bankNameTxt, accountNumTxt, sortCodeTxt, cardNameTxt, IBANTxt, BICTxt, salaryTxt;
 
 	private Connection connection;
@@ -60,13 +60,13 @@ public class EnterEmployeeDetails_Screen {
 		oNameLbl = new JLabel("Other Given Name(s): ");
 		addressLbl = new JLabel("Address: ");
 		cityLbl = new JLabel("City: ");
-		countryLbl = new JLabel("County: ");
+		countryLbl = new JLabel("Country: ");
 		postcodeLbl = new JLabel("Postcode: ");
 		NINumberLbl = new JLabel("NI Number: ");
 		bankNameLbl = new JLabel("Bank Name: ");
-		accountNumLbl = new JLabel("Account Name: ");
+		accountNumLbl = new JLabel("Account Number: ");
 		sortCodeLbl = new JLabel("Sort Code: ");
-		cardNameLbl = new JLabel("Card Name: ");
+		cardNameLbl = new JLabel("Card Holder Name: ");
 		IBANLbl = new JLabel("IBAN: ");
 		BICLbl = new JLabel("Bank ID Code: ");
 		salaryLbl = new JLabel("Salary: ");
@@ -76,7 +76,7 @@ public class EnterEmployeeDetails_Screen {
 		oNameTxt = new JTextField(50);
 		addressTxt = new JTextField(50);
 		cityTxt = new JTextField(60);
-		countyTxt = new JTextField(30);
+		countryTxt = new JTextField(30);
 		postcodeTxt = new JTextField(7);
 		NINumberTxt = new JTextField(9);
 		bankNameTxt = new JTextField(30);
@@ -104,7 +104,7 @@ public class EnterEmployeeDetails_Screen {
 		left.add(cityTxt);
 
 		left.add(countryLbl);
-		left.add(countyTxt);
+		left.add(countryTxt);
 
 		left.add(postcodeLbl);
 		left.add(postcodeTxt);
@@ -143,15 +143,15 @@ public class EnterEmployeeDetails_Screen {
 		saveBtn.addActionListener(new ActionListener() { // when save button
 															// clicked
 			public void actionPerformed(ActionEvent e) {
-				Employee employee = new Employee(fNameLbl.getText(), lNameLbl.getText(), oNameLbl.getText(),
-						addressLbl.getText(), cityLbl.getText(), countryLbl.getText(), postcodeLbl.getText(),
-						NINumberLbl.getText(), Double.parseDouble(salaryTxt.getText()), bankNameLbl.getText(),
-						accountNumTxt.getText(), sortCodeTxt.getText(), cardNameLbl.getText(), IBANLbl.getText(),
-						BICLbl.getText());
-				String query = " insert into employee(first_name, last_name, other_names, address, city, country, postcode, NI_no, starting salary) + values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				Employee employee = new Employee(fNameTxt.getText(), lNameTxt.getText(), oNameTxt.getText(),
+						addressTxt.getText(), cityTxt.getText(), countryTxt.getText(), postcodeTxt.getText(),
+						NINumberTxt.getText(), Double.parseDouble(salaryTxt.getText()), bankNameTxt.getText(),
+						accountNumTxt.getText(), sortCodeTxt.getText(), cardNameTxt.getText(), IBANTxt.getText(),
+						BICTxt.getText());
+				String query = " insert into employee(first_name, last_name, other_names, address, city, country, postcode, NI_no, starting_salary) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt;
 				try {
-					preparedStmt = conn.prepareStatement(query);
+					preparedStmt = connection.prepareStatement(query);
 					preparedStmt.setString(1, employee.getF_name());
 					preparedStmt.setString(2, employee.getL_name());
 					preparedStmt.setString(3, employee.getO_names());

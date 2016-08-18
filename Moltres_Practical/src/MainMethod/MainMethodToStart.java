@@ -24,7 +24,7 @@ static Connection conn;
 					e1.printStackTrace();
 				}
 				try {
-					Connection c = 
+					conn = 
 					      DriverManager.getConnection("jdbc:mysql://localhost/moltresDB?useSSL=false", 
 					            "root", "password");
 				} catch (SQLException e) {

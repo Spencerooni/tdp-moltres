@@ -21,11 +21,12 @@ public class Home_Screen {
 	
 	private JFrame screen;
 	private JPanel panel;
+	private Connection connection;
 	
 	
 	public Home_Screen(Connection conn){
 		intro = new JLabel("Welcome User! :D");
-		
+		connection=conn;
 		screen = new JFrame("Home Screen");
 		screen.setSize(500, 500);							
 		screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,7 +58,7 @@ public class Home_Screen {
 		
 		newEmployeeBtn.addActionListener(new ActionListener() {		//when save button clicked
 			public void actionPerformed(ActionEvent e){
-				new EnterEmployeeDetails_Screen(conn);
+				new EnterEmployeeDetails_Screen(connection);
 			}
 		}); 
 		
