@@ -4,13 +4,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 public class Home_Screen {
@@ -22,7 +22,8 @@ public class Home_Screen {
 	private JFrame screen;
 	private JPanel panel;
 	
-	public Home_Screen(){
+	
+	public Home_Screen(Connection conn){
 		intro = new JLabel("Welcome User! :D");
 		
 		screen = new JFrame("Home Screen");
@@ -56,7 +57,7 @@ public class Home_Screen {
 		
 		newEmployeeBtn.addActionListener(new ActionListener() {		//when save button clicked
 			public void actionPerformed(ActionEvent e){
-				new EnterEmployeeDetails_Screen();
+				new EnterEmployeeDetails_Screen(conn);
 			}
 		}); 
 		
