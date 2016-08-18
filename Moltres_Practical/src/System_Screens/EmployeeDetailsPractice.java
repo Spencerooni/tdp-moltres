@@ -24,16 +24,40 @@ public class EmployeeDetailsPractice
 			
 			st = conn.createStatement();
 			rs = st.executeQuery(
-			      "SELECT first_name FROM employee");
+			      //"SELECT first_name FROM employee");
+			
+			
+			
+			"select concat(first_name, ' ',last_name) 'name', department_name from employee join "
+			+ "employee_department on employee.employee_no = employee_department.employee_no join "
+			+ "department on employee_department.department_no = department.department_no order "
+			+ "by department_name");
+			
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter
+					("home/tdp-moltres/employeeList.txt")),true);
 			while(rs.next())
 			{
-			   //String out = String.format("%s", 
-			   //rs.getString("first_name"));
+				
+				outt = String.format("%s is in %s.", 
+				rs.getString("name"), rs.getString("department_name"));
+				
+			   out.write(outt);
 			   
-			   outt  = rs.getString("first_name");
+			   //outt  = rs.getString("first_name");
 			   
 			   System.out.println(outt);
 			}
+			
+			
+			
+			
+			
+			
+			out.flush();
+			out.close();
+			
+			System.out.println("file has been written");
+			
 		}
 		catch(SQLException e)
 		{
@@ -42,14 +66,16 @@ public class EmployeeDetailsPractice
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
 		
 		
 	/*	try
 		{
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter
 					("home/trainee/employeeList.txt")),true);
-			
-			
 			
 			out.write(outt);
 			
