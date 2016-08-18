@@ -3,7 +3,9 @@ package System_Screens;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
@@ -16,7 +18,7 @@ public class EnterEmployeeDetails_Screen {
 	private JFrame screen;
 	private Button saveBtn;
 	private JPanel left;
-	private JPanel finished;
+	//private JScrollPane finished;
 	private JLabel instructions;
 
 	private JLabel fNameLbl, lNameLbl, oNameLbl, 
@@ -36,7 +38,9 @@ public class EnterEmployeeDetails_Screen {
 		screen = new JFrame("Employee Details");
 		saveBtn = new Button();
 		left = new JPanel();
-		finished = new JPanel();
+		
+		int i = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+		int j = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
 		instructions = new JLabel("Please enter the employees information: ");
 		
 		screen.setSize(700, 1000);								//FORM 800w 1000h
@@ -45,13 +49,15 @@ public class EnterEmployeeDetails_Screen {
 		screen.setVisible(true);
 		screen.setResizable(false);
 
-		
-		finished.setSize(700, 1000);							//Same size as the window
+									//Same size as the window
 		left.setPreferredSize(new Dimension(700,1000));
 		left.setLayout(new FlowLayout(FlowLayout.CENTER,300,10));
 		left.setBorder(new EtchedBorder());
 
-
+		JScrollPane finished = new JScrollPane(left,i,j);
+		finished.setSize(700, 1000);
+		
+		
 		fNameLbl = new JLabel("First Name: ");
 		lNameLbl = new JLabel("Last Name: ");
 		oNameLbl = new JLabel("Other Given Name(s): ");
@@ -131,7 +137,6 @@ public class EnterEmployeeDetails_Screen {
 		left.add(salaryTxt);
 		
 		finished.add(left);
-		//finished.add(right);
 		finished.add(saveBtn);
 
 		screen.add(finished);
