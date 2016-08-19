@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -156,26 +157,47 @@ public class EnterEmployeeDetails_Screen {
 		saveBtn.addActionListener(new ActionListener() { // when save button
 															// clicked
 			public void actionPerformed(ActionEvent e) {
-				Employee employee = new Employee(fNameTxt.getText(), lNameTxt.getText(), oNameTxt.getText(),
+				Employee employee = new Employee(Integer.parseInt(IDTxt.getText()), fNameTxt.getText(), lNameTxt.getText(), oNameTxt.getText(),
 						addressTxt.getText(), cityTxt.getText(), countryTxt.getText(), postcodeTxt.getText(),
 						NINumberTxt.getText(), Double.parseDouble(salaryTxt.getText()), bankNameTxt.getText(),
 						accountNumTxt.getText(), sortCodeTxt.getText(), cardNameTxt.getText(), IBANTxt.getText(),
 						BICTxt.getText());
-				String query = " insert into employee(first_name, last_name, other_names, address, city, country, postcode, NI_no, starting_salary) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String employeeQuery = " insert into employee(employee_no, first_name, last_name, other_names, address, city, country, postcode, NI_no, starting_salary) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt;
 				try {
-					preparedStmt = connection.prepareStatement(query);
-					preparedStmt.setString(1, employee.getF_name());
-					preparedStmt.setString(2, employee.getL_name());
-					preparedStmt.setString(3, employee.getO_names());
-					preparedStmt.setString(4, employee.getAddress());
-					preparedStmt.setString(5, employee.getCity());
-					preparedStmt.setString(6, employee.getCountry());
-					preparedStmt.setString(7, employee.getPostcode());
-					preparedStmt.setString(8, employee.getNi_num());
-					preparedStmt.setDouble(9, employee.getStarting_sal());
+					preparedStmt = connection.prepareStatement(employeeQuery);
+					preparedStmt.setInt(1, employee.getEmployee_no());
+					preparedStmt.setString(2, employee.getF_name());
+					preparedStmt.setString(3, employee.getL_name());
+					preparedStmt.setString(4, employee.getO_names());
+					preparedStmt.setString(5, employee.getAddress());
+					preparedStmt.setString(6, employee.getCity());
+					preparedStmt.setString(7, employee.getCountry());
+					preparedStmt.setString(8, employee.getPostcode());
+					preparedStmt.setString(9, employee.getNi_num());
+					preparedStmt.setDouble(10, employee.getStarting_sal());
 
 					preparedStmt.execute();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				String employeeBankQuery = " insert into bank_details(bank_name, sortcode, account_no, card_holder_name, IBAN, BIC, "
+						+ "employee_no) values (?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement bankPreparedStmt;
+				try {
+					bankPreparedStmt = connection.prepareStatement(employeeBankQuery);
+					bankPreparedStmt.setString(1, employee.getBankname());
+					bankPreparedStmt.setString(2, employee.getSortcode());
+					bankPreparedStmt.setString(3, employee.getAccountnum());
+					bankPreparedStmt.setString(4, employee.getCardname());
+					bankPreparedStmt.setString(5, employee.getIban());
+					bankPreparedStmt.setString(6, employee.getBic());
+					bankPreparedStmt.setInt(7, employee.getEmployee_no());
+
+					bankPreparedStmt.execute();
+					JOptionPane.showMessageDialog(finished, "Employee details saved!");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
