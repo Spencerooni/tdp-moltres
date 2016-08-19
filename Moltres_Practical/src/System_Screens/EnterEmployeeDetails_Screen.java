@@ -26,11 +26,18 @@ public class EnterEmployeeDetails_Screen {
 	// private JScrollPane finished;
 	private JLabel instructions;
 
-	private JLabel fNameLbl, lNameLbl, oNameLbl, addressLbl, cityLbl, countryLbl, postcodeLbl, NINumberLbl, bankNameLbl,
-			accountNumLbl, sortCodeLbl, cardNameLbl, IBANLbl, BICLbl, salaryLbl;
+	
+	private JLabel IDLbl, fNameLbl, lNameLbl, oNameLbl, 
+	addressLbl, cityLbl, countryLbl,
+	postcodeLbl, NINumberLbl, bankNameLbl, 
+	accountNumLbl, sortCodeLbl, cardNameLbl, 
+	IBANLbl, BICLbl, salaryLbl;
 
-	private JTextField fNameTxt, lNameTxt, oNameTxt, addressTxt, cityTxt, countryTxt, postcodeTxt, NINumberTxt,
-			bankNameTxt, accountNumTxt, sortCodeTxt, cardNameTxt, IBANTxt, BICTxt, salaryTxt;
+	private JTextField IDTxt, fNameTxt, lNameTxt, oNameTxt, 
+	addressTxt, cityTxt, countryTxt,
+	postcodeTxt, NINumberTxt, bankNameTxt, 
+	accountNumTxt, sortCodeTxt, cardNameTxt, 
+	IBANTxt, BICTxt, salaryTxt;
 
 	private Connection connection;
 
@@ -55,6 +62,7 @@ public class EnterEmployeeDetails_Screen {
 		left.setLayout(new FlowLayout(FlowLayout.CENTER, 300, 10));
 		left.setBorder(new EtchedBorder());
 
+		IDLbl = new JLabel("ID: ");
 		fNameLbl = new JLabel("First Name: ");
 		lNameLbl = new JLabel("Last Name: ");
 		oNameLbl = new JLabel("Other Given Name(s): ");
@@ -71,6 +79,7 @@ public class EnterEmployeeDetails_Screen {
 		BICLbl = new JLabel("Bank ID Code: ");
 		salaryLbl = new JLabel("Salary: ");
 
+		IDTxt = new JTextField(5);
 		fNameTxt = new JTextField(50);
 		lNameTxt = new JTextField(50);
 		oNameTxt = new JTextField(50);
@@ -88,6 +97,10 @@ public class EnterEmployeeDetails_Screen {
 		salaryTxt = new JTextField(10);
 
 		left.add(instructions);
+		
+		left.add(IDLbl);
+		left.add(IDTxt);
+		
 		left.add(fNameLbl);
 		left.add(fNameTxt);
 
