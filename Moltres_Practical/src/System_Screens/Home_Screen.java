@@ -47,7 +47,7 @@ public class Home_Screen {
 		
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(700,1000));
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER,300,10));
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER,100,100));
 		panel.setBorder(new EtchedBorder());
 		
 		newEmployeeBtn = new JButton();
