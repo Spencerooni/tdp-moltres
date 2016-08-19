@@ -34,11 +34,11 @@ public class EmployeeDetailsPractice
 			+ "by department_name");
 			
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter
-					("home/tdp-moltres/employeeList.txt")),true);
+					("/home/trainee/tdp-moltres/employeeList.txt")),true);
 			while(rs.next())
 			{
 				
-				outt = String.format("%s is in %s.", 
+				outt = String.format("%s is in %s\n", 
 				rs.getString("name"), rs.getString("department_name"));
 				
 			   out.write(outt);
