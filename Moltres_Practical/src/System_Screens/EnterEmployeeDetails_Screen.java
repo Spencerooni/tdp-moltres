@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -40,12 +41,13 @@ public class EnterEmployeeDetails_Screen {
 	IBANTxt, BICTxt, salaryTxt;
 
 	private Connection connection;
+	private boolean isValidationCheck = false;
 
 	public EnterEmployeeDetails_Screen(Connection conn) {
 
 		connection = conn;
 		screen = new JFrame("Employee Details");
-		saveBtn = new Button();
+		saveBtn = new Button("Create Employee");
 		saveBtn.setSize(200, 100);
 		left = new JPanel();
 
@@ -79,22 +81,22 @@ public class EnterEmployeeDetails_Screen {
 		BICLbl = new JLabel("Bank ID Code: ");
 		salaryLbl = new JLabel("Salary: ");
 
-		IDTxt = new JTextField(5);
-		fNameTxt = new JTextField(50);
-		lNameTxt = new JTextField(50);
-		oNameTxt = new JTextField(50);
-		addressTxt = new JTextField(50);
-		cityTxt = new JTextField(60);
-		countryTxt = new JTextField(30);
-		postcodeTxt = new JTextField(7);
-		NINumberTxt = new JTextField(9);
-		bankNameTxt = new JTextField(30);
-		accountNumTxt = new JTextField(8);
-		sortCodeTxt = new JTextField(6);
-		cardNameTxt = new JTextField(50);
-		IBANTxt = new JTextField(22);
-		BICTxt = new JTextField(11);
-		salaryTxt = new JTextField(10);
+		IDTxt = new JTextField(20);
+		fNameTxt = new JTextField(20);
+		lNameTxt = new JTextField(20);
+		oNameTxt = new JTextField(20);
+		addressTxt = new JTextField(20);
+		cityTxt = new JTextField(20);
+		countryTxt = new JTextField(20);
+		postcodeTxt = new JTextField(20);
+		NINumberTxt = new JTextField(20);
+		bankNameTxt = new JTextField(20);
+		accountNumTxt = new JTextField(20);
+		sortCodeTxt = new JTextField(20);
+		cardNameTxt = new JTextField(20);
+		IBANTxt = new JTextField(20);
+		BICTxt = new JTextField(20);
+		salaryTxt = new JTextField(20);
 
 		left.add(instructions);
 		
@@ -156,36 +158,118 @@ public class EnterEmployeeDetails_Screen {
 		saveBtn.addActionListener(new ActionListener() { // when save button
 															// clicked
 			public void actionPerformed(ActionEvent e) {
-				Employee employee = new Employee(fNameTxt.getText(), lNameTxt.getText(), oNameTxt.getText(),
+				validationCheck();
+				if(isValidationCheck == true){
+				Employee employee = new Employee(Integer.parseInt(IDTxt.getText()), fNameTxt.getText(), lNameTxt.getText(), oNameTxt.getText(),
 						addressTxt.getText(), cityTxt.getText(), countryTxt.getText(), postcodeTxt.getText(),
 						NINumberTxt.getText(), Double.parseDouble(salaryTxt.getText()), bankNameTxt.getText(),
 						accountNumTxt.getText(), sortCodeTxt.getText(), cardNameTxt.getText(), IBANTxt.getText(),
 						BICTxt.getText());
-				String query = " insert into employee(first_name, last_name, other_names, address, city, country, postcode, NI_no, starting_salary) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				String employeeQuery = " insert into employee(employee_no, first_name, last_name, other_names, address, city, country, postcode, NI_no, starting_salary) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement preparedStmt;
 				try {
-					preparedStmt = connection.prepareStatement(query);
-					preparedStmt.setString(1, employee.getF_name());
-					preparedStmt.setString(2, employee.getL_name());
-					preparedStmt.setString(3, employee.getO_names());
-					preparedStmt.setString(4, employee.getAddress());
-					preparedStmt.setString(5, employee.getCity());
-					preparedStmt.setString(6, employee.getCountry());
-					preparedStmt.setString(7, employee.getPostcode());
-					preparedStmt.setString(8, employee.getNi_num());
-					preparedStmt.setDouble(9, employee.getStarting_sal());
+					preparedStmt = connection.prepareStatement(employeeQuery);
+					preparedStmt.setInt(1, employee.getEmployee_no());
+					preparedStmt.setString(2, employee.getF_name());
+					preparedStmt.setString(3, employee.getL_name());
+					preparedStmt.setString(4, employee.getO_names());
+					preparedStmt.setString(5, employee.getAddress());
+					preparedStmt.setString(6, employee.getCity());
+					preparedStmt.setString(7, employee.getCountry());
+					preparedStmt.setString(8, employee.getPostcode());
+					preparedStmt.setString(9, employee.getNi_num());
+					preparedStmt.setDouble(10, employee.getStarting_sal());
 
 					preparedStmt.execute();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				String employeeBankQuery = " insert into bank_details(bank_name, sortcode, account_no, card_holder_name, IBAN, BIC, "
+						+ "employee_no) values (?, ?, ?, ?, ?, ?, ?)";
+				PreparedStatement bankPreparedStmt;
+				try {
+					bankPreparedStmt = connection.prepareStatement(employeeBankQuery);
+					bankPreparedStmt.setString(1, employee.getBankname());
+					bankPreparedStmt.setString(2, employee.getSortcode());
+					bankPreparedStmt.setString(3, employee.getAccountnum());
+					bankPreparedStmt.setString(4, employee.getCardname());
+					bankPreparedStmt.setString(5, employee.getIban());
+					bankPreparedStmt.setString(6, employee.getBic());
+					bankPreparedStmt.setInt(7, employee.getEmployee_no());
 
+					bankPreparedStmt.execute();
+					JOptionPane.showMessageDialog(finished, "Employee details saved!");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				}
 			}
 		});
 
 		screen.add(finished);
 
+	}
+	
+	public void validationCheck()
+	{
+		String errorsList = "(-";
+		int count = 0;
+		
+		if(fNameTxt.getText().equals(""))
+		{
+			errorsList += "First Name- ";
+			count++;
+			//JOptionPane.showMessageDialog(screen, "Please enter a name in the first name field");
+		}
+		if(lNameTxt.getText().equals(""))
+		{
+			errorsList += "Last Name- ";
+			count++;
+			//JOptionPane.showMessageDialog(screen, "Please enter the " + errorsList + " fields - They have "
+			//		+ "been left blank");
+		}
+		if(addressTxt.getText().equals(""))
+		{
+			errorsList += "Address- ";
+			count++;
+		}
+		if(cityTxt.getText().equals(""))
+		{
+			errorsList += "City- ";
+			count++;
+		}
+		if(countryTxt.getText().equals(""))
+		{
+			errorsList += "country- ";
+			count++;
+		}
+		if(postcodeTxt.getText().equals(""))
+		{
+			errorsList += "Postcode- ";
+			count++;
+		}
+		if(NINumberTxt.getText().equals(""))
+		{
+			errorsList += "NI Number- ";
+			count++;
+		}
+		if(salaryTxt.getText().equals(""))
+		{
+			errorsList += "Salary- ";
+			count++;
+		}
+		if(count > 0)
+		{
+			JOptionPane.showMessageDialog(screen, "Please enter the " + errorsList + ") fields - They have "
+					+ "been left blank");
+		}
+		else
+		{
+			isValidationCheck = true;
+		}
 	}
 
 }
