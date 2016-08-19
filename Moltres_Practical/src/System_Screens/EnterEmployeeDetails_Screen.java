@@ -45,7 +45,7 @@ public class EnterEmployeeDetails_Screen {
 
 		connection = conn;
 		screen = new JFrame("Employee Details");
-		saveBtn = new Button();
+		saveBtn = new Button("Create Employee");
 		saveBtn.setSize(200, 100);
 		left = new JPanel();
 
@@ -79,22 +79,22 @@ public class EnterEmployeeDetails_Screen {
 		BICLbl = new JLabel("Bank ID Code: ");
 		salaryLbl = new JLabel("Salary: ");
 
-		IDTxt = new JTextField(5);
-		fNameTxt = new JTextField(50);
-		lNameTxt = new JTextField(50);
-		oNameTxt = new JTextField(50);
-		addressTxt = new JTextField(50);
-		cityTxt = new JTextField(60);
-		countryTxt = new JTextField(30);
-		postcodeTxt = new JTextField(7);
-		NINumberTxt = new JTextField(9);
-		bankNameTxt = new JTextField(30);
-		accountNumTxt = new JTextField(8);
-		sortCodeTxt = new JTextField(6);
-		cardNameTxt = new JTextField(50);
-		IBANTxt = new JTextField(22);
-		BICTxt = new JTextField(11);
-		salaryTxt = new JTextField(10);
+		IDTxt = new JTextField(20);
+		fNameTxt = new JTextField(20);
+		lNameTxt = new JTextField(20);
+		oNameTxt = new JTextField(20);
+		addressTxt = new JTextField(20);
+		cityTxt = new JTextField(20);
+		countryTxt = new JTextField(20);
+		postcodeTxt = new JTextField(20);
+		NINumberTxt = new JTextField(20);
+		bankNameTxt = new JTextField(20);
+		accountNumTxt = new JTextField(20);
+		sortCodeTxt = new JTextField(20);
+		cardNameTxt = new JTextField(20);
+		IBANTxt = new JTextField(20);
+		BICTxt = new JTextField(20);
+		salaryTxt = new JTextField(20);
 
 		left.add(instructions);
 		
